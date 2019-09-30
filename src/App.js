@@ -8,8 +8,8 @@ class App extends React.Component {
     this.state = {
       id: uuid(),
       timestamp: new Date(),
-      food: ''
     }
+    this.state.food = '';
   }
 
   handleChange = (event) => {
@@ -22,13 +22,27 @@ class App extends React.Component {
     this.props.createNewFood(this.state.food);
   }
 
+  handleUpdate = (event) => {
+    event.preventDefault();
+    this.props.updateFood(this.state.food);
+  }
+
+  handleDelete = (event) => {
+    event.preventDefault();
+    this.props.deleteFood(this.state.food);
+  }
+
   render(){
     return (
       <>
         {
-          this.props.food.map(name => {
-            <li>{name}</li>
-          })
+          this.props.food.map(name => 
+            <>
+              <li onChange={this.handleChange}>{name}</li>
+              <button onSubmit={this.handleUpdate}>Update</button>
+              <button onSubmit={this.handleDelete}>Delete</button>
+            </>
+          )
         }
 
         <form onSubmit={this.handleSubmit}>
@@ -38,6 +52,7 @@ class App extends React.Component {
             onChange={this.handleChange}
             placeholder='Enter your favorite food'
           />
+
         </form>
       </>
     );
@@ -53,10 +68,24 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createNewFood : foodNmame => {
+    createNewFood : foodName => {
       dispatch({
         type: 'FOOD_CREATE',
-        payload: food,
+        payload: foodName,
+      });
+    },
+
+    updateFood : foodName => {
+      dispatch({
+        type: 'FOOD_UPDATE',
+        payload: foodName
+      });
+    },
+
+    deleteFood : foodName => {
+      dispatch({
+        type: 'FOOD_DELETE',
+        payload: foodName
       });
     },
   };
