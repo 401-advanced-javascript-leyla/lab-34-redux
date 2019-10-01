@@ -1,24 +1,19 @@
+import uuid from 'uuid';
+
 export default (state = [], {type, payload}) => {
   switch(type){
     case 'FOOD_CREATE':
-      return [...state, payload];
+      return [...state, {name: payload, id: uuid(), timestamp: new Date(),}];
     case 'FOOD_UPDATE':
-      return updateFood(state, payload);
+      return state.map(name=>{
+        return name.id === payload.id ? {...name, name: payload.name} : name;
+      });
     case 'FOOD_DELETE':
-      return deleteFood(state, payload);
+      return state.filter(name=>{
+        return name.id !== payload;
+      }); 
     default:
       return state;
   }
 
-  const updateFood = (list, food) => {
-    list.map((name)=>{
-      name.id === food.id ? food : name
-    }); 
-  }
-
-  const deleteFood = (list, food) => {
-    list.filter((name)=>{
-      name.id !== food.id
-    }); 
-  }
 };
