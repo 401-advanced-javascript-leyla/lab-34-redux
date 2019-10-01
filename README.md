@@ -14,9 +14,9 @@
 #### `App`
 The App component has state of category, methods of handleChange, handleSubmit and then render a list of the category and a form to create a new catogery.
 #### `create-store`
-The create-store component create a new store to storage all the data (category)
-#### `CategoryReducer`
-The CtegoryReducer component use CRUD methods to modify the data in the store (category)
+The create-store component create a new store to storage all the data (food)
+#### `FoodReducer`
+The FoodReducer component use CRUD methods to modify the data in the store (food)
 #### `main-reducer`
 The main-reducer component combines all the reducers
 
